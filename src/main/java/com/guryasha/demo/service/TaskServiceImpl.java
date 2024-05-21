@@ -1,5 +1,6 @@
 package com.guryasha.demo.service;
 
+import com.guryasha.demo.entity.TaskDaoImpl;
 import com.guryasha.demo.entity.TaskEntity;
 import com.guryasha.demo.exception.NonExistentObjectException;
 import org.springframework.stereotype.Service;
@@ -9,39 +10,26 @@ import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService{
-    private List<TaskEntity> list = new LinkedList<>();
-    private int lastId = 0;
+    private TaskDaoImpl taskDao = new TaskDaoImpl();
+
 
     @Override
     public Iterable<TaskEntity> returnAllTasks() {
-        return list;
+        return taskDao.returnAllTasks();
     }
 
     @Override
     public TaskEntity returnTaskById(int id) {
-        TaskEntity obj = list.stream().filter(list -> id == (list.getId())).findFirst().orElse(null);
-        if (obj == null) {
-            throw new NonExistentObjectException();
-        }
-        return obj;
+        return taskDao.returnTaskById(id);
     }
 
     @Override
     public TaskEntity addTask(String title, String desc) {
-        TaskEntity newTask = new TaskEntity(title, desc);
-        newTask.setId(lastId++);
-        list.add(newTask);
-        return newTask;
+        return taskDao.addTask(title, desc);
     }
 
     @Override
     public void deleteTaskById(int id) {
-        TaskEntity obj = list.stream().filter(list -> id == (list.getId())).findFirst().orElse(null);
-        if (obj == null) {
-            // error
-        } else {
-            list.remove(obj);
-            // TODO остальные записи имеют индекс на -1.
-        }
+        taskDao.deleteTaskById(id);
     }
 }

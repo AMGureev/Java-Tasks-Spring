@@ -1,7 +1,5 @@
 package com.guryasha.demo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 public class TaskEntity {
     public int id;
     public String description;
