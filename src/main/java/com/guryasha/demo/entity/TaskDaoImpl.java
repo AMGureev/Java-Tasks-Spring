@@ -96,4 +96,16 @@ public class TaskDaoImpl implements TaskDao{
             throw new RuntimeException(e);
         }
     }
+
+    public int countRow() {
+        String request = String.format("SELECT COUNT(id) FROM %s", table_name);
+        try {
+            PreparedStatement statement = connection.prepareStatement(request);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

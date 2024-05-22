@@ -7,4 +7,5 @@ public interface TaskService {
     TaskEntity returnTaskById(int id); // return task by id
     TaskEntity addTask(String title, String desc); // add task to list
     void deleteTaskById(int id); // delete task by id
+    int returnCountRow(); // return count of row in table
 }
