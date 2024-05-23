@@ -10,6 +10,13 @@ public class TaskEntity {
         this.title = title;
     }
 
+    public TaskEntity(int id, String title, String description) {
+        this.id = id;
+        this.description = description;
+        this.title = title;
+    }
+
+
     public int getId() {
         return id;
     }
@@ -44,6 +51,9 @@ public class TaskEntity {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj.getClass() != TaskEntity.class) {
+            return false;
+        }
         TaskEntity task = (TaskEntity) obj;
         return this.title.equals(task.getTitle()) && this.description.equals(task.getDescription()) && id == task.getId();
     }
