@@ -97,6 +97,7 @@ public class TaskDaoImpl implements TaskDao{
         }
     }
 
+    @Override
     public int countRow() {
         String request = String.format("SELECT COUNT(id) FROM %s", table_name);
         try {

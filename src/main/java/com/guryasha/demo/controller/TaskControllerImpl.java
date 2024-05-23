@@ -1,5 +1,6 @@
 package com.guryasha.demo.controller;
 
+import com.guryasha.demo.entity.TaskDaoImpl;
 import com.guryasha.demo.entity.TaskEntity;
 import com.guryasha.demo.service.TaskService;
 import com.guryasha.demo.service.TaskServiceImpl;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TaskControllerImpl implements TaskController{
-    private TaskService taskService = new TaskServiceImpl();
+    private TaskService taskService = new TaskServiceImpl(new TaskDaoImpl());
 
     @GetMapping("/all")
     @Override

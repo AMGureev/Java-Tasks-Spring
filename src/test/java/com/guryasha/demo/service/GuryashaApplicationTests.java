@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.security.Provider;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,8 +34,12 @@ class GuryashaApplicationTests {
 				.thenReturn(new TaskEntity(2, "Title1", "Desc1"));
 		Mockito.when(taskDao.addTask("Title2", "Desc2"))
 				.thenReturn(new TaskEntity(3, "Title2", "Desc2"));
-		TaskEntity task0 = taskDao.addTask("Title", "Desc");
 		TaskEntity task1 = new TaskEntity(1, "Title", "Desc");
+//		TaskEntity t = taskService.addTask("Title", "Desc");
+//		System.out.println(t.getId());
+//		System.out.println(t.getTitle());
+//		System.out.println(t.getDescription());
+//		System.out.println(t);
 		Assertions.assertEquals(task1, taskService.addTask("Title", "Desc"));
 		TaskEntity task2 = new TaskEntity(2, "Title1", "Desc1");
 		Assertions.assertEquals(task2, taskService.addTask("Title1", "Desc1"));
@@ -45,7 +50,31 @@ class GuryashaApplicationTests {
 		Mockito.verify(taskDao, Mockito.times(1)).addTask("Title1", "Desc1");
 		Mockito.verify(taskDao, Mockito.times(1)).addTask("Title2", "Desc2");
 
-		System.out.println("TEST_FIRST_SUCCESSFUL");
+		System.out.println("TEST_ADD_SUCCESSFUL");
+	}
+
+	@Test
+	public void delete__success() {
+		taskService.deleteTaskById(1);
+		taskService.deleteTaskById(2);
+		taskService.deleteTaskById(3);
+
+		Mockito.verify(taskDao, Mockito.times(1)).deleteTaskById(1);
+		Mockito.verify(taskDao, Mockito.times(1)).deleteTaskById(2);
+		Mockito.verify(taskDao, Mockito.times(1)).deleteTaskById(3);
+
+		System.out.println("TEST_DELETE_SUCCESSFUL");
+	}
+
+	@Test
+	public void findAll__success() {
+		Mockito.when(taskDao.returnAllTasks())
+				.thenReturn(List.of(new TaskEntity(1,"Title", "Desc"), new TaskEntity(2,"Title1", "Desc1"), new TaskEntity(3,"Title2", "Desc2")));
+
+		taskService.returnAllTasks();
+		Mockito.verify(taskDao, Mockito.times(1)).returnAllTasks();
+
+		System.out.println("TEST_FINDALL_SUCCESSFUL");
 	}
 
 //	private TaskService taskService = new TaskServiceImpl();
@@ -106,9 +135,5 @@ class GuryashaApplicationTests {
 //        Iterable<TaskEntity> list_cur = taskService.returnAllTasks();
 //        assertIterableEquals(list_pr, list_cur);
 //    }
-	@Test
-	void contextLoads() {
-
-	}
 
 }
